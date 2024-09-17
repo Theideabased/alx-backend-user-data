@@ -1,9 +1,7 @@
 # 0x01. Basic authentication
 Back-end
 Authentification
- Project will start Sep 17, 2024 6:00 AM, must end by Sep 19, 2024 6:00 AM
- Checker will be released at Sep 17, 2024 6:00 PM
- An auto review will be launched at the deadline
+
 Background Context
 In this project, you will learn what the authentication process means and implement a Basic Authentication on a simple API.
 
