@@ -15,17 +15,19 @@ class Auth:
         """
         to return False for path and excluded_paths
         """
-        if path == None:
+        if path is None or path == "":
             return True
-        else:
-            if not path.endswith("/"):
-                path += "/"
+        
+        if not path.endswith("/"):
+            path += "/"
 
-        if excluded_paths == None:
+        if excluded_paths is None or len(excluded_paths) == 0:
             return True
         else:
             for excluded_path in excluded_paths:
-                if path in excluded_path:
+                if not excluded_path.endswith("/"):
+                    excluded_path += "/"
+                if path == excluded_path:
                     return False
         return True
 
@@ -33,8 +35,19 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """
         to return request which by default is None
+        how ever if the authorization is avaliable we 
+        will return the authorization value
         """
-        return None
+        if request == None:
+            return None
+        else:
+            response = request.headers
+            if 'Authorization' not in response:
+                return None
+            else:
+                name = response.get('Authorization')
+        return name
+        # return request['Authorization']
 
 
     def current_user(self, request=None) -> TypeVar('User'):
