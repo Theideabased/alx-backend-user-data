@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-creating an authentication class
+"""creating an authentication class
 """
 from flask import request
 from typing import TypeVar, List
