@@ -18,7 +18,8 @@ class BasicAuth(Auth):
     and it will be the functions that will be
     used for Basic Auth of our project on flask
     """
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(
+            self, authorization_header: str) -> str:
         """ This function will extract the header of a
         request if it is has authentication and if
         the authentication is the correct one
@@ -34,7 +35,8 @@ class BasicAuth(Auth):
         else:
             return authorization_header[6:]
 
-    def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
         """ This function will decode the header
         first check if it is in base64 then it
         will decode the base64 so that it can
@@ -54,7 +56,8 @@ class BasicAuth(Auth):
         except (base64.binascii.Error, ValueError):
             return None
 
-    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str):
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> (str, str):
         """ This will extract the user credentials in the
         decoded value so that it can be used by the
         user instance when needed
@@ -71,9 +74,12 @@ class BasicAuth(Auth):
             return None, None
         return dba_header[0], dba_header[1]
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar(User):
-        """ Class method to return a User object if the credentials are valid.
-        this class will use the search function the is in the auth from the base.py to search the file after authentication
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar(User):
+        """ Class method to return a User object if the credentials are
+        valid.
+        this class will use the search function the is in the auth from
+        the base.py to search the file after authentication
         """
         if user_email is None or not isinstance(user_email, str):
             return None
@@ -106,5 +112,6 @@ class BasicAuth(Auth):
         extract_user = self.extract_user_credentials(decode)
         if extract_user:
             user_email, user_pwd = extract_user
-            user_object = self.user_object_from_credentials(user_email, user_pwd)
+            user_object = self.user_object_from_credentials(
+                    user_email, user_pwd)
             return user_object
