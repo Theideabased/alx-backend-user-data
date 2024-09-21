@@ -8,7 +8,7 @@ from typing import TypeVar, List
 
 class Auth:
     """
-    This class will create a simple 
+    This class will create a simple
     authentication for my apis
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
@@ -17,10 +17,8 @@ class Auth:
         """
         if path is None or path == "":
             return True
-        
         if not path.endswith("/"):
             path += "/"
-
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
         else:
@@ -31,14 +29,13 @@ class Auth:
                     return False
         return True
 
-
     def authorization_header(self, request=None) -> str:
         """
         to return request which by default is None
-        how ever if the authorization is avaliable we 
+        how ever if the authorization is avaliable we
         will return the authorization value
         """
-        if request == None:
+        if request is None:
             return None
         else:
             response = request.headers
@@ -47,8 +44,6 @@ class Auth:
             else:
                 name = response.get('Authorization')
         return name
-        # return request['Authorization']
-
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
