@@ -103,15 +103,15 @@ class BasicAuth(Auth):
         auth_header = self.authorization_header(request)
         if not auth_header:
             return None
-        extract = self.extract_base64_authorization_header(auth_header)
-        if not extract:
+        encoded = self.extract_base64_authorization_header(auth_header)
+        if not encoded:
             return None
-        decode = self.decode_base64_authorization_header(extract)
-        if not decode:
+        decoded = self.decode_base64_authorization_header(encoded)
+        if not decoded:
             return None
-        extract_user = self.extract_user_credentials(decode)
-        if extract_user:
-            user_email, user_pwd = extract_user
-            user_object = self.user_object_from_credentials(
+        user_email, user_pwd = self.extract_user_credentials(decoded)
+        if not user_email or not user_pwd:
+            return None
+        user_object = self.user_object_from_credentials(
                     user_email, user_pwd)
-            return user_object
+        return user_object
