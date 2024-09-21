@@ -5,27 +5,45 @@ import base64
 import re
 from typing import TypeVar
 """
-this is the class of the
-basic authentication
+this is the class of the basic authentication this will contain
+different function that will be used to enocode and decode using base64
+the class have the function
+extract_base64_authorization_header, decode_base64_authorization_header
+extract_user_credentials and user_objects_from_credentials
 """
 
 
 class BasicAuth(Auth):
     """
-    this authentication for basic authentication 
-    in flask
+    this authentication for basic authentication
+    in flask this class will inherit from Auth
+    and it will be the functions that will be
+    used for Basic Auth of our project on flask
     """
     def extract_base64_authorization_header(self, authorization_header: str) -> str:
+        """
+        This function will extract the header of a
+        request if it is has authentication and if
+        the authentication is the correct one
+        then it will return the value of the
+        authentication
+        """
         if authorization_header is None:
             return None
-        elif type(authorization_header) != str:
+        elif type(authorizatiron_header) != str:
             return None
-        elif authorization_header.startswith('Basic ') != True:
+        elif not authorization_header.startswith('Basic '):
             return None
         else:
             return authorization_header[6:]
 
     def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+        """
+        This function will decode the header
+        first check if it is in base64 then it
+        will decode the base64 so that it can
+        return the value of the decode result
+        """
         if base64_authorization_header is None:
             return None
         if type(base64_authorization_header) != str:
@@ -40,8 +58,12 @@ class BasicAuth(Auth):
         except (base64.binascii.Error, ValueError):
             return None
 
-
     def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str):
+        """
+        This will extract the user credentials in the
+        decoded value so that it can be used by the
+        user instance when needed
+        """
 
         if decoded_base64_authorization_header is None:
             return None, None
@@ -51,14 +73,14 @@ class BasicAuth(Auth):
             return None, None
         dba_header = decoded_base64_authorization_header.split(":", 1)
         if len(dba_header) != 2:
-            return None,None
-            
+            return None, None
         return dba_header[0], dba_header[1]
 
-    
-
     def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar(User):
-        """ Class method to return a User object if the credentials are valid. """
+        """
+        Class method to return a User object if the credentials are valid.
+        this class will use the search function the is in the auth from the base.py to search the file after authentication
+        """
         if user_email is None or not isinstance(user_email, str):
             return None
         if user_pwd is None or not isinstance(user_pwd, str):
@@ -71,11 +93,14 @@ class BasicAuth(Auth):
         for user in found_users:
             if user.is_valid_password(user_pwd):
                 return user
-        
         return None
 
-
     def current_user(self, request=None) -> TypeVar('User'):
+        """
+        This will help us get the current user in the instance
+        and then use it to work out things when necessary and
+        this will futher get us the user instance
+        """
         auth_header = self.authorization_header(request)
         if not auth_header:
             return None
