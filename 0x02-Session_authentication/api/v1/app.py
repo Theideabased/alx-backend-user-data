@@ -51,13 +51,17 @@ def before_request():
     """
     if auth is None:
         pass
-    req_list = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/\
-            forbidden/']
+    req_list = [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/ forbidden/'
+            ]
     if auth.require_auth(request.path, req_list):
         if auth.authorization_header(request) is None:
             abort(401)
         if auth.current_user(request) is None:
             abort(403)
+    request.current_user = auth.current_user(request)
 
 
 if __name__ == "__main__":
