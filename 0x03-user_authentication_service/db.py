@@ -64,3 +64,20 @@ class DB:
             return user
         except NoResultFound:
             raise NoResultFound()
+
+
+
+    def update_user(self, user_id: int, **kwargs):
+        """ this will first user the find_user_by function to find the 
+        first occurence then it will update that occurence to the new 
+        value that is require """
+        valid_columns = [column.name for column in User.__table__.columns]
+        for key in kwargs.keys():
+            if key not in valid_columns:
+                raise ValueError
+        if user_id == User.id:
+            session.commit()
+        else:
+            return ValueError
+
+
