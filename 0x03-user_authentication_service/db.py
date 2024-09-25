@@ -9,6 +9,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import User
 from user import Base
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
@@ -44,3 +46,21 @@ class DB:
 
         # Return the newly create user
         return new_user
+
+    def find_user_by(self,**kwargs):
+        """ This will take any argument from the table name
+        then find the value of the first occurence of such 
+        argument """
+        valid_columns = [column.name for column in User.__table__.columns]
+
+        for key in kwargs.keys():
+            if key not in valid_columns:
+                raise InvalidRequestError()
+
+        try:
+            user = self.__session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound()
+            return user
+        except NoResultFound:
+            raise NoResultFound()
