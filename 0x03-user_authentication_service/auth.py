@@ -1,4 +1,4 @@
-#!/usr/bin/env/ python3
+#!/usr/bin/env python3
 """ This is a function that will be used for auth """
 import bcrypt
 
