@@ -11,6 +11,7 @@ def data():
     sample = jsonify({"message": "Bienvenue"})
     return sample
 
+
 @app.route('/users', methods=['POST'])
 def users():
     """ this will help me to register user for my app """
@@ -20,11 +21,11 @@ def users():
             pass
         email = data.get("email")
         password = data.get("password")
-        
         AUTH.register_user(email, password)
         return jsonify({"email": f"{email}", "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")

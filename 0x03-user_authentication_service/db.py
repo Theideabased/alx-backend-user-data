@@ -62,7 +62,7 @@ class DB:
             raise NoResultFound()
         return user
 
-    def update_user(self, user_id: int, **kwargs):
+    def update_user(self, user_id: int, **kwargs: str) -> None:
         """ this will first user the find_user_by function to find the
         first occurence then it will update that occurence to the new
         value that is require """

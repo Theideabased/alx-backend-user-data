@@ -7,7 +7,7 @@ from user import User
 user = User()
 
 
-def _hash_password(password : str):
+def _hash_password(password: str):
     """ this will use the bcyrpt to add salt and
     hash the password for security """
     bytes = password.encode('utf-8')
@@ -16,6 +16,7 @@ def _hash_password(password : str):
     hash = bcrypt.hashpw(bytes, salt)
 
     return hash
+
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -26,7 +27,7 @@ class Auth:
 
     def register_user(self, email: str, password: str):
         """ this will find if a user is already registered
-        and if it is not registered it will hash the password and 
+        and if it is not registered it will hash the password and
         store it in the database"""
         try:
             x = self._db.find_user_by(email=email)
